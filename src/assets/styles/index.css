@@ -13,3 +13,60 @@ body{
   align-items: center;
   justify-content: space-between;
 }
+
+.test{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.test-text{
+  width: 600px;
+  height: 300px;
+  background-color: var(--simple-white);
+  box-shadow: 0 0 10px 5px rgba(var(--decor-color-rgb), .25);
+  border-radius: 10px;
+  padding: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--primary-blue);
+}
+
+
+.test-stats{
+  width: 200px;
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: var(--simple-white);
+  border-radius: 10px;
+  box-shadow: 0 0 10px 5px rgba(var(--decor-color-rgb), .25);
+  color: var(--primary-blue);
+  font-size: 25px;
+}
+
+span{
+  transition: all 0.3s;
+}
+
+.choose-sentenses{
+  font-size: 25px;
+  color: var(--primary-blue);
+}
+
+.wrong-char{
+  background-color: var(--wrong-color);
+}
+
+.right-char{
+  color: var(--right-color);
+}
+
+.current-char{
+  background-color: var(--right-color);
+  color: var(--simple-white)
+}

@@ -9,7 +9,7 @@ type TestState = {
 const initialState: TestState = {
   isTestStarted: false,
   isTestFinished: false,
-  sentences: '4',
+  sentences: '1',
 };
 
 const testSlice = createSlice({

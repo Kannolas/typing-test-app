@@ -1,14 +1,16 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
-import { fetchText, setText, setCurrentCharIndex, increasePressingCount, setMistakes } from '../../store/reducers/textSlice';
-import { getCurrentChar, compareChars } from '../../helpers/charTransform';
-import { accuracyCounting, speedCounting } from '../../helpers/stateCounting';
+import { useAppDispatch, useAppSelector } from '../store/hooks/hooks';
+import { fetchText, setText, setCurrentCharIndex, increasePressingCount, setMistakes, resetTextState } from '../store/reducers/textSlice';
+import { getCurrentChar, compareChars, restoreText } from '../helpers/charTransform';
+import { accuracyCounting, speedCounting } from '../helpers/stateCounting';
 
-import Button from '../UI/Button/Button';
-import c from './Test.module.css'
-import { increaseSeconds, setIsTimerOn } from '../../store/reducers/timerSlice';
-import { setIsTestFinished } from '../../store/reducers/testSlice';
+import Stats from './Stats';
+import Button from './UI/Button/Button';
+
+import { increaseSeconds, resetSeconds, setIsTimerOn } from '../store/reducers/timerSlice';
+import { resetTestState, setIsTestFinished } from '../store/reducers/testSlice';
+import ModalWindow from './ModalWindow/ModalWindow';
 
 const Test:FunctionComponent = () => {
   const dispatch = useAppDispatch()
@@ -21,8 +23,25 @@ const Test:FunctionComponent = () => {
   const sentences = useAppSelector(state => state.testSlice.sentences)
   const seconds = useAppSelector(state => state.timerSlice.seconds)
   const isTimerOn = useAppSelector(state => state.timerSlice.isTimerOn)
+  const isTestFinished = useAppSelector(state => state.testSlice.isTestFinished);
   const [speed, setSpeed] = useState('0.00');
   const [accuracy, setAccuracy] = useState('0.00');
+
+  
+  function restart(){
+    dispatch(resetSeconds())
+    dispatch(resetTextState())
+    dispatch(setText(restoreText(text)))
+
+    if(isTestFinished){
+      dispatch(setIsTestFinished(false))
+    }
+  }
+  function newTest(){
+    dispatch(resetTestState())
+    dispatch(resetTextState())
+    dispatch(resetSeconds())
+  }
 
   useEffect(()=>{
     dispatch(fetchText(sentences))
@@ -40,6 +59,7 @@ const Test:FunctionComponent = () => {
 
     if(currentCharIndex < text.length){
       const keyPressHandler = (event:KeyboardEvent)=>{
+        event.preventDefault()
         const [newText, newCurrentIndex, newMistakes] = compareChars(text, currentCharIndex, event.key, mistakes)
         dispatch(setCurrentCharIndex(newCurrentIndex))
         dispatch(setText(newText))
@@ -74,21 +94,35 @@ const Test:FunctionComponent = () => {
   }, [mistakes, pressingCount, seconds])
 
   return (
-    <div className={c.test}>
-        <div className={c["test-text"]}>{
+    <div className={'test'}>
+        <div className={"test-text"}>{
           text.map((item, index)=>{
             return(
               <span className={item.class} key={index}>{item.char}</span>
             )
           })
         }</div>
-        <div className={c["test-stats"]}>
-            <div className={c["test-stats-speed"]}>SPEED</div>
-            <div className={c["test-stats-speed-value"]}>{speed} LPM</div>
-            <div className={c["test-stats-accuracy"]}>ACCURACY</div>
-            <div className={c["test-stats-accuracy-value"]}>{accuracy} %</div>
-            <Button btnText='RESTART'/>
-        </div>
+        <Stats>
+        <Button 
+            onClick={restart}
+            onFocus={(event)=>{event.target.blur()}}
+            btnText='RESTART'/>
+        </Stats>
+        {
+          isTestFinished && 
+          <ModalWindow title='Test completed!'>
+            <Stats>
+            <Button
+              onClick={restart}
+              btnText='RESTART'
+              />
+              <Button
+              onClick={newTest}
+              btnText='NEW TEST'
+              />
+            </Stats>
+          </ModalWindow>
+        }
     </div>
   );
 };

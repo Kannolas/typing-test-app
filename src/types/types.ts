@@ -11,3 +11,8 @@ export type TextType = {
     mistakes: number;
     pressingCount: number;
   };
+
+export type TimerState ={
+  isTimerOn: boolean;
+  seconds: number;
+}
