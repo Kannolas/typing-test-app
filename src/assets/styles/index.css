@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Young+Serif&display=swap');
+body{
+  background-color: rgb(240, 240, 240);
+  background-color: var(--primary-blue);
+  height: auto;
+  font-family: var(--default-font);
+}
+
+.main{
+  height: 600px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,12 @@
+.footer{
+    width: 50vw;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-text{
+    font-size: 25px;
+    font-family: 'Roboto';
+}

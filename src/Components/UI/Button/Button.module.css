@@ -1,0 +1,16 @@
+.custom-button{
+    border: none;
+    width: 150px;
+    height: 50px;
+    background-color: var(--pink);
+    font-size: 20px;
+    border-radius: 5px;
+    color: #121212;
+    transition: all 0.3s;
+}
+
+.custom-button:hover{
+    cursor: pointer;
+    background-color: var(--decor-color);
+    color: var(--primary-blue);
+}

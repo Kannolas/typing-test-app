@@ -1,0 +1,16 @@
+:root {
+    --primary-blue: #355070;
+    --primary-vio: #6d597a;
+    --primary-pink: #b56576;
+    --pink: #e56b6f;
+    --decor-color: #eaac8b;
+    --right-color: #2d6a4f;
+    --wrong-color: #a4161a;
+    --simple-white: #ffffff;
+  
+    --decor-color-rgb: 234, 172, 139;
+    --primary-dark-rgb: 22, 66, 91;
+    --simple-black-rgb: 0, 0, 0;
+  
+    --default-font: 'Roboto', serif;
+  }
