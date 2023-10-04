@@ -56,11 +56,12 @@ const textSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchText.fulfilled, (state, action)=>{
+                state.isLoading = false;
                 state.text = action.payload.split('').map((item, index)=>{
                     return index === 0
                     ?{char: item, class: 'current-char'}
                     :{char:item, class:''};
-                    state.isLoading = false;
+                    
                 })
             })
             .addCase(fetchText.rejected, (state, action)=>{

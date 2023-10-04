@@ -11,6 +11,7 @@ import Button from './UI/Button/Button';
 import { increaseSeconds, resetSeconds, setIsTimerOn } from '../store/reducers/timerSlice';
 import { resetTestState, setIsTestFinished } from '../store/reducers/testSlice';
 import ModalWindow from './ModalWindow/ModalWindow';
+import { MutatingDots } from 'react-loader-spinner';
 
 const Test:FunctionComponent = () => {
   const dispatch = useAppDispatch()
@@ -53,7 +54,7 @@ const Test:FunctionComponent = () => {
   }, [dispatch, currentCharIndex])
 
   useEffect(()=>{
-    if(pressingCount === 0 && text.length>0){
+    if(pressingCount === 1 && text.length>0){
       dispatch(setIsTimerOn(true))
     }
 
@@ -95,13 +96,27 @@ const Test:FunctionComponent = () => {
 
   return (
     <div className={'test'}>
-        <div className={"test-text"}>{
-          text.map((item, index)=>{
-            return(
-              <span className={item.class} key={index}>{item.char}</span>
-            )
-          })
-        }</div>
+      <div className={"test-text"}>
+        {error && <p className='error-text'>{error}</p>}
+        {isLoading?<><MutatingDots 
+          height="100"
+          width="100"
+          color="#4fa94d"
+          secondaryColor= '#4fa94d'
+          radius='12.5'
+          ariaLabel="mutating-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+ /></>
+ :
+  text.map((item, index)=>{
+    return(
+      <span className={item.class} key={index}>{item.char}</span>
+    )
+  })
+}</div>
+        
         <Stats>
         <Button 
             onClick={restart}
